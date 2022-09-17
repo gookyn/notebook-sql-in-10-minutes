@@ -1,5 +1,5 @@
 -- ------------------------------
--- 06.用通配符进行过滤
+-- 06. 用通配符进行过滤
 -- ------------------------------
 
 /*
@@ -49,3 +49,26 @@ WHERE prod_name LIKE '__ inch teddy bear'; -- 两个字符
  * 2、在确实需要使用时，尽量不要用在搜索模式的开始处，会导致搜索很慢
  * 3、仔细注意通配符的位置
 */
+
+-- 挑战题
+
+-- 1 描述中有 toy
+SELECT prod_name, prod_desc
+FROM Products
+WHERE prod_desc LIKE '%toy%';
+
+-- 2 描述中没有 toy
+SELECT prod_name, prod_desc
+FROM Products
+WHERE NOT prod_desc LIKE '%toy%'
+ORDER BY prod_name;
+
+-- 3 同时出现 toy 和 carrots
+SELECT prod_name, prod_desc
+FROM Products
+WHERE prod_desc LIKE '%toy%' AND prod_desc LIKE '%carrots%';
+
+-- 4 按照先后顺序同时出现 toy 和 carrots
+SELECT prod_name, prod_desc
+FROM Products
+WHERE prod_desc LIKE '%toy%carrots%';

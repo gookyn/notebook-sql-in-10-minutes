@@ -31,14 +31,23 @@ FROM Products
 ORDER BY prod_price DESC, prod_name; -- DESC 只应用到直接位于其前面的列名
 -- 注意：如果想在多个列上进行降序排序，必须对每一列指定 DESC 关键字
 
+-- 3.6 挑战题
 
+-- 1
+SELECT cust_name
+FROM Customers
+ORDER BY cust_name DESC;
 
+-- 2
+SELECT cust_id, order_num
+FROM Orders
+ORDER BY cust_id, order_date DESC;
 
+-- 3
+SELECT quantity, item_price
+FROM OrderItems
+ORDER BY quantity DESC, item_price DESC;
 
-
-
-
-
-
-
-
+-- 4
+-- 第一行 ,
+-- ORDER BY

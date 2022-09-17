@@ -37,3 +37,44 @@ ORDER BY
 	cust_name;
 	
 	-- 完全限定列名 Orders.cust_id、Customers.cust_id
+
+-- 挑战题
+
+-- 1 返回 购买价格为10美元或以上产品的 顾客列表
+SELECT cust_id
+FROM Orders
+WHERE order_num IN (SELECT order_num
+										FROM OrderItems
+										WHERE item_price >= 10);
+
+-- 2 查询订购 BR01 产品的日期
+SELECT order_date, cust_id
+FROM Orders
+WHERE order_num IN (SELECT order_num
+										FROM OrderItems
+										WHERE prod_id = 'BR01')
+ORDER BY order_date;
+
+-- 3 查询订购 BR01 产品的所有顾客的电子邮箱
+SELECT cust_email
+FROM Customers
+WHERE cust_id IN (SELECT cust_id
+									FROM Orders
+									WHERE order_num IN (SELECT order_num
+																			FROM OrderItems
+																			WHERE prod_id = 'BR01'));
+																			
+-- 4 查询每个订单的总金额以及其客户
+SELECT cust_id, 
+			(SELECT SUM(item_price * quantity)
+			FROM OrderItems
+			WHERE Orders.order_num = OrderItems.order_num) AS total_ordered
+FROM Orders
+ORDER BY total_ordered DESC;
+
+-- 5 查询所有的产品名称及所售产品的总数
+SELECT prod_name,
+			(SELECT SUM(quantity)
+			FROM OrderItems
+			WHERE Products.prod_id = OrderItems.prod_id) AS quant_sold
+FROM Products;

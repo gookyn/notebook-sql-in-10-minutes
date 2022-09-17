@@ -46,5 +46,25 @@ WHERE cust_email IS NULL;
 
 -- 注意：通过过滤选择不包含指定值的所有行时，无法返回含 NULL 值的行
 
+-- 4.4 挑战题
 
+-- 1
+SELECT prod_id, prod_name
+FROM Products
+WHERE prod_price = 9.49;
 
+-- 2
+SELECT prod_id, prod_name
+FROM Products
+WHERE prod_price >= 9;
+
+-- 3
+SELECT DISTINCT order_num
+FROM OrderItems
+WHERE quantity >= 100;
+
+-- 4
+SELECT prod_name, prod_price
+FROM Products
+WHERE prod_price BETWEEN 3 AND 6
+ORDER BY prod_price;

@@ -51,6 +51,19 @@ SELECT prod_name
 FROM Products
 LIMIT 5 OFFSET 2;
 
+-- 2.9 挑战题
 
+-- 1
+SELECT cust_id
+FROM Customers; 
 
+-- 2
+SELECT DISTINCT prod_id
+FROM OrderItems;
 
+-- 3
+SELECT *
+FROM Customers;
+
+-- SELECT cust_id
+-- FROM Customers;

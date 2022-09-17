@@ -34,3 +34,18 @@ WHERE SOUNDEX(cust_contact) = SOUNDEX('Michael Green');
 
 -- 8.2.3 数值处理函数
 -- 仅处理数值数据，一般主要用于代数、三角或几何运算
+
+-- 挑战题
+
+-- 1 登录名为 联系人字段前两字符 + 所在城市前三个字符，全大写
+SELECT cust_id, cust_name, UPPER(CONCAT(SUBSTR(cust_contact, 1, 2), SUBSTR(cust_city, 1, 3))) AS user_login
+FROM Customers;
+
+SELECT cust_id, cust_name, UPPER(CONCAT(LEFT(cust_contact, 2), LEFT(cust_city, 3))) AS user_login
+FROM Customers;
+
+-- 2 2020年1月份的订单
+SELECT order_num, order_date
+FROM Orders
+WHERE YEAR(order_date) = 2020 AND MONTH(order_date) = 1 
+ORDER BY order_date;

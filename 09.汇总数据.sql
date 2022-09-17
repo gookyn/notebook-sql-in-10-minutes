@@ -103,3 +103,19 @@ WHERE vend_id = 'DLL01';
 */
 SELECT COUNT(*) AS num_items, MAX(prod_price) AS price_max, MIN(prod_price) AS price_min, AVG(prod_price) AS price_avg
 FROM Products;
+
+-- 挑战题
+
+-- 1
+SELECT SUM(quantity) AS sum_quantity
+FROM OrderItems;
+
+-- 2
+SELECT SUM(quantity) AS sum_quantity
+FROM OrderItems
+WHERE prod_id = 'BR01';
+
+-- 3
+SELECT MAX(prod_price) AS max_price
+FROM Products
+WHERE prod_price <= 10;
