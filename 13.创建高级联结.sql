@@ -75,3 +75,36 @@ GROUP BY Customers.cust_id;
 * 应该总是提供联结条件，避免出现笛卡尔积
 * 在一个联结中可以包含多个表，甚至可以对每个联结采用不同的联结类型
 */
+
+-- 13.6 挑战题
+
+-- 1 查询每个顾客的名称和所有订单号
+SELECT cust_name, order_num
+FROM Customers AS C
+	INNER JOIN Orders AS O ON C.cust_id = O.cust_id
+ORDER BY cust_name;
+
+-- 2 修改1，列出所有顾客，即使没有下过订单
+SELECT cust_name, order_num
+FROM Customers AS C
+	LEFT OUTER JOIN Orders AS O ON C.cust_id = O.cust_id
+ORDER BY cust_name;
+
+-- 3 使用外联结，查询产品名称和与之相关的订单号
+SELECT prod_name, order_num
+FROM Products
+	LEFT OUTER JOIN OrderItems ON Products.prod_id = OrderItems.prod_id
+ORDER BY prod_name;
+
+-- 4 修改3，返回每一项产品的总订单数
+SELECT prod_name, COUNT(order_num) AS total_order
+FROM Products
+	LEFT OUTER JOIN OrderItems ON Products.prod_id = OrderItems.prod_id
+GROUP BY Products.prod_id
+ORDER BY prod_name;
+
+-- 5 查询供应商及其可供产品的数量，包括没有产品的供应商
+SELECT Vendors.vend_id, vend_name, COUNT(prod_id) AS total_prod
+FROM Vendors
+	LEFT OUTER JOIN Products ON Vendors.vend_id = Products.vend_id
+GROUP BY Vendors.vend_id;
