@@ -53,3 +53,41 @@ SELECT cust_name, cust_contact, cust_email
 FROM Customers
 WHERE cust_name = 'Fun4All'
 ORDER BY cust_name, cust_contact;
+
+-- 14.4 挑战题
+
+-- 1 使用两个 SELECT，一个查过滤订单中数量为100的产品，另一个过滤ID以 BNBG 开头的产品
+SELECT prod_id, quantity
+FROM OrderItems
+WHERE quantity = 100
+UNION
+SELECT prod_id, quantity
+FROM OrderItems
+WHERE prod_id LIKE 'BNBG%'
+ORDER BY prod_id;
+
+-- 2 重写1，仅使用单个 SELECT
+SELECT prod_id, quantity
+FROM OrderItems
+WHERE quantity = 100 OR prod_id LIKE 'BNBG%' -- 注意：这里是 OR，不是 AND
+ORDER BY prod_id;
+
+-- 3 组合产品名称和顾客名称
+SELECT prod_name
+FROM Products
+UNION
+SELECT cust_name -- 注意：结果会和 prod_name 合并为一列
+FROM Customers
+ORDER BY prod_name;
+
+-- 4
+-- ORDER BY 只能在最后一条 SELECT 之后
+-- 注意分号
+SELECT cust_name, cust_contact, cust_email
+FROM Customers
+WHERE cust_state  = 'MI'
+UNION
+SELECT cust_name, cust_contact, cust_email
+FROM Customers
+WHERE cust_state = 'IL'
+ORDER BY cust_name;
