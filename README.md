@@ -5,4 +5,8 @@
 > - 作者：[美] 本·福达（Ben Forta）
 > - 译者：钟鸣 / 刘晓霞
 
-阅读笔记 & 代码练习
+学习笔记 & 代码练习
+
+在线地址：https://forta.com/books/0135182794/
+
+挑战题解决：https://forta.com/books/0135182794/challenges/
