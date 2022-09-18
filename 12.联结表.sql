@@ -51,3 +51,69 @@ WHERE Products.vend_id = Vendors.vend_id
 	AND order_num = 20007;
 	
 -- 联结的表越多，性能下降越厉害
+
+-- 12.4 挑战题
+
+-- 1 返回顾客名称及相关订单号
+-- 等值联结
+SELECT cust_name, order_num
+FROM Customers, Orders
+WHERE Customers.cust_id = Orders.cust_id
+ORDER BY cust_name, order_num;
+
+-- 或使用 INNER JOIN
+SELECT cust_name, order_num
+FROM Customers
+	INNER JOIN Orders ON Customers.cust_id = Orders.cust_id
+ORDER BY cust_name, order_num;
+
+-- 2 返回顾客名称、订单号、订单总价
+-- 使用联结表
+SELECT cust_name, Orders.order_num, SUM(item_price * quantity) AS order_total
+FROM Customers, Orders, OrderItems
+WHERE Customers.cust_id = Orders.cust_id
+			AND Orders.order_num = OrderItems.order_num
+GROUP BY cust_name, Orders.order_num
+ORDER BY cust_name, Orders.order_num;
+
+-- 或使用子查询
+SELECT cust_name,
+			 order_num,
+			 (SELECT SUM(item_price * quantity)
+			  FROM OrderItems
+				WHERE OrderItems.order_num = Orders.order_num) AS order_total
+FROM Customers, Orders
+WHERE Customers.cust_id = Orders.cust_id
+ORDER BY cust_name, order_num;
+
+-- 3 查询订购产品 BR01 的日期
+SELECT order_date, cust_id
+FROM Orders, OrderItems
+WHERE Orders.order_num = OrderItems.order_num AND prod_id = 'BR01'
+ORDER BY order_date;
+
+-- 4 查询订购 BR01 产品的所有顾客的电子邮箱
+SELECT cust_email
+FROM Customers
+	INNER JOIN Orders ON Customers.cust_id = Orders.cust_id
+	INNER JOIN OrderItems ON Orders.order_num = OrderItems.order_num
+WHERE prod_id = 'BR01';
+
+-- 5 查询订单总价大于等于 1000 的顾客列表
+-- 等联结
+SELECT cust_name, SUM(item_price * quantity) as totol_price
+FROM Customers, Orders, OrderItems
+WHERE Customers.cust_id = Orders.cust_id
+	AND Orders.order_num = OrderItems.order_num
+GROUP BY cust_name
+HAVING SUM(item_price * quantity) >= 1000  -- 注意分组及过滤
+ORDER BY cust_name;
+
+-- INNER JOIN
+SELECT cust_name, SUM(item_price * quantity) as totol_price
+FROM Customers
+	INNER JOIN Orders ON Customers.cust_id = Orders.cust_id
+	INNER JOIN OrderItems ON Orders.order_num = OrderItems.order_num
+GROUP BY cust_name
+HAVING SUM(item_price * quantity) >= 1000  -- 注意分组及过滤
+ORDER BY cust_name;
